@@ -1,0 +1,23 @@
+name: Create Repository
+
+on:
+  workflow_dispatch:
+
+env:
+  TF_VAR_github_token: ${{ secrets.TF_GITHUB_TOKEN }}
+
+jobs:
+  create_repository:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Initialize Terraform
+        run: terraform init
+
+      - name: Create Repository
+        run: terraform apply -auto-approve
